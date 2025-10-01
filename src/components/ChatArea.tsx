@@ -16,7 +16,7 @@ interface Props {
   onJump: (messageId: string) => void;   // <-- NEW
 }
 
-const ChatArea: React.FC<Props> = ({ messages, setMessages, onPinBoardOpen, onQuoteFromSelection, onJump }) => {
+const ChatArea: React.FC<Props> = ({ messages, setMessages, onQuoteFromSelection }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [selectionInfo, setSelectionInfo] = useState<{ text: string; x: number; y: number } | null>(null);
   const [inputValue, setInputValue] = useState('');
