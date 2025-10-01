@@ -13,6 +13,7 @@ interface Props {
 const SidebarLeft: React.FC<Props> = ({ items, collapsed, onCollapseToggle, onOpenMessage }) => {
   const [q, setQ] = useState('');
   const [preview, setPreview] = useState<{ open: boolean; messageId?: string }>({ open: false });
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({}); // accordion state
 
   const filtered = useMemo(() => {
     const t = q.toLowerCase();
@@ -33,10 +34,13 @@ const SidebarLeft: React.FC<Props> = ({ items, collapsed, onCollapseToggle, onOp
   const numberInGroup = (groupItems: QuestionItem[], id: string) =>
     groupItems.findIndex((g) => g.id === id) + 1;
 
+  const toggleGroup = (g: string) => setOpenGroups((prev) => ({ ...prev, [g]: !prev[g] }));
+
   return (
     <aside className={`leftbar ${collapsed ? 'collapsed' : ''}`}>
       <div className="leftbar-header">
         <div className="brand">TENJIN</div>
+        <div className="brand-logo">T</div>
         <button className="collapse-btn" onClick={onCollapseToggle} title="Collapse left panel">
           <ArrowCollapse />
         </button>
@@ -52,34 +56,34 @@ const SidebarLeft: React.FC<Props> = ({ items, collapsed, onCollapseToggle, onOp
       </div>
 
       <div className="leftbar-list">
-        {groups.map(([group, arr]) => (
-          <div className="group" key={group}>
-            <div className="group-header">
-              <DocumentIcon className="document-icon" />
-              <span className="group-title">{group}</span>
-            </div>
+        {groups.map(([group, arr]) => {
+          const open = openGroups[group] ?? true;
+          return (
+            <div className={`group ${open ? 'open' : 'closed'}`} key={group}>
+              <button className="group-header" onClick={() => toggleGroup(group)}>
+                <DocumentIcon className="document-icon" />
+                <span className="group-title">{group}</span>
+              </button>
 
-            <ol className="group-list">
-              {arr.map((it) => (
-                <li key={it.id} className="question-item">
-                  <div className="num">{numberInGroup(arr, it.id)}.</div>
-                  <label className="checkbox">
-                    <input type="checkbox" defaultChecked={!!it.checked} />
-                    <span />
-                  </label>
-                  <button
-                    className="question-title"
-                    onClick={() => setPreview({ open: true, messageId: it.messageId })}
-                    onDoubleClick={() => it.messageId && onOpenMessage(it.messageId!)}
-                    title="Click: preview / Double‑click: jump to message"
-                  >
-                    {it.title}
-                  </button>
-                </li>
-              ))}
-            </ol>
-          </div>
-        ))}
+              <ol className="group-list">
+                {open &&
+                  arr.map((it) => (
+                    <li key={it.id} className="question-item">
+                      <div className="num">{numberInGroup(arr, it.id)}.</div>
+                      <button
+                        className="question-title"
+                        onClick={() => setPreview({ open: true, messageId: it.messageId })}
+                        onDoubleClick={() => it.messageId && onOpenMessage(it.messageId!)}
+                        title="Click: preview / Double‑click: jump to message"
+                      >
+                        {it.title}
+                      </button>
+                    </li>
+                  ))}
+              </ol>
+            </div>
+          );
+        })}
       </div>
 
       <Modal
@@ -88,7 +92,6 @@ const SidebarLeft: React.FC<Props> = ({ items, collapsed, onCollapseToggle, onOp
         title="AI Chatbotの回答リスト／質問者の質問側から開く"
         width={720}
       >
-        <div className="preview-hint">部分的にテキスト選択して、さらに質問可能。</div>
         <div className="preview-block">
           <b>11.</b> Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.
         </div>

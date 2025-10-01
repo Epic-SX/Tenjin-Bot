@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { Message } from '../types';
 import MessageBubble from './MessageBubble';
-import { Pin } from './Icons';
-import SummaryCard from './SummaryCard';
+import { HiOutlineMicrophone } from "react-icons/hi2";
+import { CgAttachment } from "react-icons/cg";
+import { GoPlus } from "react-icons/go";
+import { AiOutlineSend } from "react-icons/ai";
 
 interface Props {
   messages: Message[];
@@ -64,44 +66,46 @@ const ChatArea: React.FC<Props> = ({ messages, setMessages, onPinBoardOpen, onQu
   return (
     <div className="chat-root">
       <div className="chat-header">
-        <div className="chat-title">TENJIN</div>
-        <div className="chat-right-tools">
-          <button className="pill-btn" onClick={onPinBoardOpen}>
-            <Pin className="mr-6" /> Pinned
-          </button>
-        </div>
+        <div className="chat-title">TENJIN</div>       
       </div>
 
       <div className="chat-scroll" ref={scrollRef}>
-        {/* NEW: two-column layout inside the scroll area */}
-        <div className="chat-columns">
-          <SummaryCard messages={messages} onJump={onJump} />
-
-          <div className="chat-stream">
-            {indexed.map((m) => (
-              <MessageBubble
-                key={m.id}
-                message={m}
-                indexNumber={m.number}
-                onToggleExpand={toggleExpand}
-                onTogglePin={togglePin}
-                onCopy={copy}
-                onReply={reply}
-                onShare={share}
-              />
-            ))}
-          </div>
-        </div>
+        {indexed.map((m) => (
+          <MessageBubble
+            key={m.id}
+            message={m}
+            indexNumber={m.number}
+            onToggleExpand={toggleExpand}
+            onTogglePin={togglePin}
+            onCopy={copy}
+            onReply={reply}
+            onShare={share}
+          />
+        ))}
       </div>
 
       <div className="chat-input">
         <div className="input-left">
-          <button className="circle-btn" title="Voice">🎙️</button>
-          <button className="circle-btn" title="Attach">📎</button>
-          <button className="circle-btn" title="More">＋</button>
+          <button className="circle-btn" title="Attach"><CgAttachment /></button>
+          <button className="circle-btn" title="Voice"><HiOutlineMicrophone /></button>
         </div>
-        <input className="text-input" placeholder="Type your message…" />
-        <button className="send-btn" title="Send">➤</button>
+        <div className="text-input-wrapper">
+          <button 
+            className="input-icon-btn" 
+            title="More"
+            onMouseDown={(e) => e.preventDefault()}
+          >
+            <GoPlus />
+          </button>
+          <input className="text-input" placeholder="Type your message…" />
+          <button 
+            className="send-btn" 
+            title="Send"
+            onMouseDown={(e) => e.preventDefault()}
+          >
+            <AiOutlineSend />
+          </button>
+        </div>
       </div>
 
       {selectionInfo && (

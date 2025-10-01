@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import type { Message } from '../types';
 import Modal from './Modal';
+import { BsFillPinAngleFill } from "react-icons/bs";
 
 interface Props {
   messages: Message[];
@@ -52,6 +53,12 @@ const SidebarRight: React.FC<Props> = ({ messages, onJump }) => {
           Etiam sit amet orci eget eros faucibus
         </div>
       </Modal>
+
+      <div className="pin-button-container">
+        <button className="pin-button" title="Pin sidebar">
+          <BsFillPinAngleFill />
+        </button>
+      </div>
     </aside>
   );
 };

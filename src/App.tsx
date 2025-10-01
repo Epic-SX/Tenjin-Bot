@@ -1,7 +1,8 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { initialMessages, initialQuestions } from './data';
 import type { Message } from './types';
 import SidebarLeft from './components/SidebarLeft';
+import SidebarChatbot from './components/SidebarChatbot';
 import ChatArea from './components/ChatArea';
 import SidebarRight from './components/SidebarRight';
 import PinBoard from './components/PinBoard';
@@ -13,9 +14,6 @@ const App: React.FC = () => {
   );
   const [leftCollapsed, setLeftCollapsed] = useState(false);
   const [pinOpen, setPinOpen] = useState(false);
-  const centerScroll = useRef<HTMLDivElement>(null);
-
-  const byId = useMemo(() => new Map(messages.map(m => [m.id, m])), [messages]);
 
   const jumpToMessage = (id: string) => {
     // crude jump by scrolling to element index
@@ -36,6 +34,8 @@ const App: React.FC = () => {
         onCollapseToggle={() => setLeftCollapsed((v) => !v)}
         onOpenMessage={jumpToMessage}
       />
+
+      <SidebarChatbot messages={messages} onJump={jumpToMessage} />
 
       <ChatArea
         messages={messages}
