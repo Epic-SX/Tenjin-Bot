@@ -39,7 +39,40 @@ export const initialMessages: Message[] = [
     text:
       'Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. ' +
       'Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.',
-    createdAt: '2025-01-01T10:05:00Z'
+    createdAt: '2025-01-01T10:05:00Z',
+    subMessages: [
+      'Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.',
+      'Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus.',
+      'Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus.'
+    ],
+    subMessageReplies: {
+      0: [
+        {
+          id: 'm12_0_1',
+          author: 'user',
+          text: 'Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio tincidunt tempus?',
+          createdAt: '2025-01-01T10:06:00Z'
+        },
+        {
+          id: 'm12_0_2',
+          author: 'ai',
+          text: 'Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.',
+          createdAt: '2025-01-01T10:07:00Z'
+        },
+        {
+          id: 'm12_0_3',
+          author: 'user',
+          text: 'Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio tincidunt tempus?',
+          createdAt: '2025-01-01T10:08:00Z'
+        },
+        {
+          id: 'm12_0_4',
+          author: 'ai',
+          text: 'Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.',
+          createdAt: '2025-01-01T10:09:00Z'
+        }
+      ]
+    }
   },
   {
     id: 'm13',

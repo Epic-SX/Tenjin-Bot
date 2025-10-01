@@ -1,6 +1,10 @@
 import React, { useMemo, useRef, useState } from 'react';
 import type { Message } from '../types';
 import { CaretDown, Dots, Pin } from './Icons';
+import { GoReply } from "react-icons/go";
+import { IoShareOutline } from "react-icons/io5";
+import { GoCopy } from "react-icons/go";
+import { BsPin } from "react-icons/bs";
 
 interface Props {
   message: Message;
@@ -32,23 +36,31 @@ const MessageBubble: React.FC<Props> = ({
             <CaretDown className={`caret-icon ${message.expanded ? 'rotated' : ''}`} />
           </button>
           <div className="spacer" />
-          <button
-            className={`icon-btn pin ${message.pinned ? 'active' : ''}`}
-            onClick={() => onTogglePin(message.id)}
-            title={message.pinned ? 'Unpin' : 'Pin'}
-          >
-            <Pin filled={message.pinned} />
-          </button>
+          {message.pinned && (
+            <button
+              className="icon-btn pin active"
+              onClick={() => onTogglePin(message.id)}
+              title="Unpin"
+            >
+              <Pin filled={true} />
+            </button>
+          )}
           <button className="icon-btn" onClick={() => setMenuOpen((v) => !v)} title="More">
             <Dots />
           </button>
           {menuOpen && (
             <div className="menu" onMouseLeave={() => setMenuOpen(false)}>
-              <button onClick={() => { onReply(message.id); setMenuOpen(false); }}>Reply</button>
-              <button onClick={() => { onShare(message.id); setMenuOpen(false); }}>Share</button>
-              <button onClick={() => { onCopy(message.id); setMenuOpen(false); }}>Copy</button>
-              <button onClick={() => { onTogglePin(message.id); setMenuOpen(false); }}>
-                {message.pinned ? 'Unpin' : 'Pin'}
+              <button onClick={() => { onReply(message.id); setMenuOpen(false); }} title="Reply">
+                <GoReply />
+              </button>
+              <button onClick={() => { onShare(message.id); setMenuOpen(false); }} title="Share">
+                <IoShareOutline />
+              </button>
+              <button onClick={() => { onCopy(message.id); setMenuOpen(false); }} title="Copy">
+                <GoCopy />
+              </button>
+              <button onClick={() => { onTogglePin(message.id); setMenuOpen(false); }} title={message.pinned ? 'Unpin' : 'Pin'}>
+                <BsPin />
               </button>
             </div>
           )}
@@ -56,7 +68,7 @@ const MessageBubble: React.FC<Props> = ({
 
         <div className="bubble-text">{message.text}</div>
       </div>
-      <div className="msg-ellipsis">…</div>
+      
     </div>
   );
 };

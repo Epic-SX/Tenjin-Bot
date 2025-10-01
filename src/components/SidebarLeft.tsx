@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import type { QuestionItem } from '../types';
-import { SearchIcon, ArrowCollapse, DocumentIcon } from './Icons';
+import { SearchIcon, ArrowCollapse } from './Icons';
 import Modal from './Modal';
+import { CiFolderOn } from "react-icons/ci";
 
 interface Props {
   items: QuestionItem[];
@@ -61,7 +62,7 @@ const SidebarLeft: React.FC<Props> = ({ items, collapsed, onCollapseToggle, onOp
           return (
             <div className={`group ${open ? 'open' : 'closed'}`} key={group}>
               <button className="group-header" onClick={() => toggleGroup(group)}>
-                <DocumentIcon className="document-icon" />
+                <CiFolderOn className="document-icon" />
                 <span className="group-title">{group}</span>
               </button>
 
@@ -89,7 +90,6 @@ const SidebarLeft: React.FC<Props> = ({ items, collapsed, onCollapseToggle, onOp
       <Modal
         open={preview.open}
         onClose={() => setPreview({ open: false })}
-        title="AI Chatbotの回答リスト／質問者の質問側から開く"
         width={720}
       >
         <div className="preview-block">
