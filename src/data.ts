@@ -7,7 +7,8 @@ export const initialMessages: Message[] = [
     text:
       'Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, ' +
       'sem quam semper libero, sit amet adipiscing sem neque sed ipsum.',
-    createdAt: '2025-01-01T10:00:00Z'
+    createdAt: '2025-01-01T10:00:00Z',
+    conversationId: 'q1'
   },
   {
     id: 'm9',
@@ -15,7 +16,8 @@ export const initialMessages: Message[] = [
     text:
       'Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. ' +
       'Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.',
-    createdAt: '2025-01-01T10:01:00Z'
+    createdAt: '2025-01-01T10:01:00Z',
+    conversationId: 'q2'
   },
   {
     id: 'm10',
@@ -23,7 +25,8 @@ export const initialMessages: Message[] = [
     text:
       'Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, ' +
       'nam quam nunc, blandit vel, luctus pulvinar, sodales, augue velit cursus nunc velit.',
-    createdAt: '2025-01-01T10:02:00Z'
+    createdAt: '2025-01-01T10:02:00Z',
+    conversationId: 'q3'
   },
   {
     id: 'm11',
@@ -31,7 +34,8 @@ export const initialMessages: Message[] = [
     text:
       'Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. ' +
       'Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas.',
-    createdAt: '2025-01-01T10:04:00Z'
+    createdAt: '2025-01-01T10:04:00Z',
+    conversationId: 'q6'
   },
   {
     id: 'm12',
@@ -40,6 +44,7 @@ export const initialMessages: Message[] = [
       'Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. ' +
       'Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.',
     createdAt: '2025-01-01T10:05:00Z',
+    conversationId: 'q4',
     subMessages: [
       'Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.',
       'Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus.',
@@ -80,14 +85,16 @@ export const initialMessages: Message[] = [
     text:
       'Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. ' +
       'Maecenas nec odio et ante tincidunt tempus.',
-    createdAt: '2025-01-01T10:06:00Z'
+    createdAt: '2025-01-01T10:06:00Z',
+    conversationId: 'q4'
   },
   {
     id: 'm14',
     author: 'ai',
     text:
       'Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed.',
-    createdAt: '2025-01-01T10:07:00Z'
+    createdAt: '2025-01-01T10:07:00Z',
+    conversationId: 'q4'
   }
 ];
 

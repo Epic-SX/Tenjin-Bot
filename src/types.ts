@@ -16,6 +16,7 @@ export interface Message {
   createdAt: string;
   subMessages?: string[];
   subMessageReplies?: { [key: number]: SubMessageReply[] };
+  conversationId?: string; // Track which conversation this message belongs to
 }
 
 export interface QuestionItem {

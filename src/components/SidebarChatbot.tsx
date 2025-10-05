@@ -37,7 +37,7 @@ const SidebarChatbot: React.FC<Props> = ({ messages, onJump }) => {
   );
 
   const getMessageNumber = (messageId: string) => {
-    return 8 + messages.findIndex((m) => m.id === messageId);
+    return 1 + messages.findIndex((m) => m.id === messageId);
   };
 
   const handlePressStart = (messageId: string) => {
@@ -175,7 +175,7 @@ const SidebarChatbot: React.FC<Props> = ({ messages, onJump }) => {
             onDoubleClick={() => onJump(m.id)}
             title="Press and hold: preview / Double‑click: jump to message"
           >
-            <div className="chatbot-number">{8 + messages.indexOf(m)}.</div>
+            <div className="chatbot-number">{getMessageNumber(m.id)}.</div>
             <div className="chatbot-text">{m.text.slice(0, 80)}{m.text.length > 80 ? '…' : ''}</div>
           </button>
         ))}
