@@ -27,7 +27,7 @@ const SidebarChatbot: React.FC<Props> = ({ messages, onJump }) => {
   const recordingTimerRef = useRef<number | null>(null);
   
   const aiSummary = useMemo(
-    () => messages.filter((m) => m.author === 'ai').slice(0, 4),
+    () => messages.filter((m) => m.author === 'ai'),
     [messages]
   );
 

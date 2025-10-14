@@ -124,6 +124,16 @@ const ChatArea: React.FC<Props> = ({ messages, setMessages, onQuoteFromSelection
     };
   }, []);
 
+  // Auto-scroll to bottom when new messages are added
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  }, [messages.length]); // Trigger when number of messages changes
+
   // Handle sending a message
   const handleSend = async () => {
     const trimmedInput = inputValue.trim();
@@ -187,12 +197,7 @@ const ChatArea: React.FC<Props> = ({ messages, setMessages, onQuoteFromSelection
         // Add AI response to chat
         setMessages((prev) => [...prev, aiMessage]);
 
-        // Auto-scroll to bottom
-        setTimeout(() => {
-          if (scrollRef.current) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-          }
-        }, 100);
+        // Auto-scroll to bottom will be handled by useEffect
       } else {
         // Handle API error response and show in chat
         const errorMessage: Message = {
@@ -252,6 +257,7 @@ const ChatArea: React.FC<Props> = ({ messages, setMessages, onQuoteFromSelection
     root.addEventListener('mouseup', onMouseUp);
     return () => root.removeEventListener('mouseup', onMouseUp);
   }, []);
+
 
   return (
     <div className="chat-root">

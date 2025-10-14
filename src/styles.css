@@ -399,7 +399,7 @@
   .caret-icon{ transition: transform .18s ease; }
   .caret-icon.rotated{ transform: rotate(180deg); }
   
-  .bubble-text{ font-size:14px; line-height:1.5; margin-top:2px; }
+  .bubble-text{ font-size:14px; line-height:1.5; margin-top:2px; white-space: pre-wrap; word-wrap: break-word; }
   
   /* clamp to 3 lines when not expanded */
   .clamped .bubble-text{
@@ -1032,6 +1032,8 @@
     font-size: 14px;
     padding-bottom: 12px;
     border-bottom: 1px solid var(--border);
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   .detail-sub-messages {
@@ -1076,6 +1078,8 @@
     color: #374151;
     line-height: 1.6;
     font-size: 14px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   .detail-reply-btn {

@@ -1,74 +1,96 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { simpleLogin } from '../services/api';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you would validate credentials here
-    console.log('Login:', { email, password });
+    setError('');
+    setIsLoading(true);
+
+    // Simple validation
+    if (!email || !password) {
+      setError('Please enter both email and password');
+      setIsLoading(false);
+      return;
+    }
+
+    // For testing phase: accept any credentials
+    const success = simpleLogin(email, password);
     
-    // For demo purposes, just navigate to the app
-    localStorage.setItem('isAuthenticated', 'true');
-    navigate('/app');
+    if (success) {
+      navigate('/app');
+    } else {
+      setError('Login failed. Please try again.');
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <div className="auth-logo">
-          <div className="auth-logo-circle">T</div>
+        <div className="auth-header">
           <h1 className="auth-title">TENJIN</h1>
+          <p className="auth-subtitle">RAG-Powered Document Assistant</p>
         </div>
-        
-        <h2 className="auth-heading">Welcome Back</h2>
-        <p className="auth-subtitle">Sign in to continue your conversations</p>
 
-        <form className="auth-form" onSubmit={handleSubmit}>
+        <h2 className="auth-form-title">Login</h2>
+
+        {error && (
+          <div className="auth-error">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="email" className="form-label">Email</label>
+            <label htmlFor="email">Email</label>
             <input
               id="email"
               type="email"
-              className="form-input"
-              placeholder="Enter your email"
+              placeholder="your@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled={isLoading}
               required
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="password" className="form-label">Password</label>
+            <label htmlFor="password">Password</label>
             <input
               id="password"
               type="password"
-              className="form-input"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              disabled={isLoading}
               required
             />
           </div>
 
-          <div className="form-options">
-            <label className="checkbox-label">
-              <input type="checkbox" className="checkbox-input" />
-              <span>Remember me</span>
-            </label>
-            <a href="#" className="forgot-link">Forgot password?</a>
-          </div>
-
-          <button type="submit" className="auth-button">
-            Sign In
+          <button 
+            type="submit" 
+            className="auth-button"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
         <div className="auth-footer">
-          <p>Don't have an account? <Link to="/signup" className="auth-link">Sign up</Link></p>
+          <p>
+            Don't have an account? <Link to="/signup">Sign up</Link>
+          </p>
+          <p className="auth-note">
+            <small>Testing Phase - Use any email/password to login</small>
+          </p>
         </div>
       </div>
     </div>
@@ -76,4 +98,3 @@ const Login: React.FC = () => {
 };
 
 export default Login;
-

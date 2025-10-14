@@ -27,7 +27,7 @@ const SidebarRight: React.FC<Props> = ({ messages, onJump }) => {
   const recordingTimerRef = useRef<number | null>(null);
   
   const summary = useMemo(
-    () => messages.filter((m) => m.author === 'user').slice(0, 4),
+    () => messages.filter((m) => m.author === 'user'),
     [messages]
   );
 
