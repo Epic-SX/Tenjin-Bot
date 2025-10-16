@@ -29,7 +29,7 @@ const MainApp: React.FC = () => {
     : messages;
 
   const jumpToMessage = (id: string) => {
-    const idx = messages.findIndex((m) => m.id === id);
+    const idx = displayedMessages.findIndex((m) => m.id === id);
     const el = document.querySelectorAll('.msg-row')[idx] as HTMLElement | undefined;
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };

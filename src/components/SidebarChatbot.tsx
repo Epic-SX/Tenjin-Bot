@@ -172,8 +172,8 @@ const SidebarChatbot: React.FC<Props> = ({ messages, onJump }) => {
             onMouseLeave={handlePressEnd}
             onTouchStart={() => handlePressStart(m.id)}
             onTouchEnd={handlePressEnd}
-            onDoubleClick={() => onJump(m.id)}
-            title="Press and hold: preview / Double‑click: jump to message"
+            onClick={() => onJump(m.id)}
+            title="Click: jump to message / Press and hold: preview"
           >
             <div className="chatbot-number">{getMessageNumber(m.id)}.</div>
             <div className="chatbot-text">{m.text.slice(0, 80)}{m.text.length > 80 ? '…' : ''}</div>

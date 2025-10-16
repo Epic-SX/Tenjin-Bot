@@ -19,6 +19,7 @@
     grid-template-columns: 320px 280px 1fr 280px;
     gap: 0;
     background: var(--bg);
+    overflow: hidden;
   }
   
   .app.left-collapsed{
@@ -695,6 +696,8 @@
     display:flex; 
     flex-direction:column;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08), -2px 0 8px rgba(0, 0, 0, 0.08);
+    height: 100vh;
+    overflow: hidden;
   }
   .chatbot-header{ 
     height: 56px;
@@ -798,7 +801,7 @@
   }
 
   /* ---------- Right Sidebar ---------- */
-  .rightbar{ background: #eaf1ff; border-left:1px solid var(--border); display:flex; flex-direction:column; box-shadow: -2px 0 8px rgba(0, 0, 0, 0.08); }
+  .rightbar{ background: #eaf1ff; border-left:1px solid var(--border); display:flex; flex-direction:column; box-shadow: -2px 0 8px rgba(0, 0, 0, 0.08); height: 100vh; overflow: hidden; }
   .rightbar-header{ height: 56px; display:flex; align-items:center; gap:8px; padding: 0 14px; border-bottom: 2px solid var(--border); border-color: #DDE0FB; background: var(--panel); }
   .avatar{ width:28px; height:28px; display:grid; place-items:center; background:#fff; border-radius:50%; border:1px solid var(--border); }
   .who{ font-weight:700; }
