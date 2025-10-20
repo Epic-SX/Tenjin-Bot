@@ -17,6 +17,8 @@ export interface Message {
   subMessages?: string[];
   subMessageReplies?: { [key: number]: SubMessageReply[] };
   conversationId?: string; // Track which conversation this message belongs to
+  hasError?: boolean; // Track if this message encountered an error
+  originalQuestion?: string; // Store the original question text for retry
 }
 
 export interface QuestionItem {

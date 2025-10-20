@@ -57,6 +57,27 @@ const ChatArea: React.FC<Props> = ({ messages, setMessages, onQuoteFromSelection
     else alert('Web Share API not available.');
   };
 
+  const retry = (id: string) => {
+    const msg = messages.find(m => m.id === id);
+    if (!msg || !msg.originalQuestion) return;
+    
+    // Remove any existing AI responses for this conversation after the user message
+    setMessages((prev) => {
+      const userMessageIndex = prev.findIndex(m => m.id === id);
+      if (userMessageIndex === -1) return prev;
+      
+      // Remove all AI messages that come after this user message in the same conversation
+      return prev.filter((m, index) => {
+        if (index <= userMessageIndex) return true;
+        if (m.conversationId !== msg.conversationId) return true;
+        return m.author !== 'ai';
+      });
+    });
+    
+    // Retry the question
+    handleSend(msg.originalQuestion, msg.id);
+  };
+
   const handleAttachment = () => {
     const input = document.createElement('input');
     input.type = 'file';
@@ -135,38 +156,49 @@ const ChatArea: React.FC<Props> = ({ messages, setMessages, onQuoteFromSelection
   }, [messages.length]); // Trigger when number of messages changes
 
   // Handle sending a message
-  const handleSend = async () => {
-    const trimmedInput = inputValue.trim();
+  const handleSend = async (questionText?: string, retryMessageId?: string) => {
+    const trimmedInput = (questionText || inputValue).trim();
     
     if (!trimmedInput || isLoading) {
       return;
     }
 
-    // Generate message ID first
-    const userMessageId = `m${Date.now()}`;
+    // Generate message ID first (or use existing for retry)
+    const userMessageId = retryMessageId || `m${Date.now()}`;
 
     // Get or create conversation ID before creating messages
     // This ensures both user message and AI response have the same conversation ID
     const conversationId = currentConversationId || onNewQuestionAnswer(userMessageId, trimmedInput);
 
-    // Create user message with the conversation ID
-    const userMessage: Message = {
-      id: userMessageId,
-      author: 'user',
-      text: trimmedInput,
-      createdAt: new Date().toISOString(),
-      pinned: false,
-      expanded: false,
-      conversationId: conversationId
-    };
+    // If this is a retry, remove the error flag from the original message
+    if (retryMessageId) {
+      setMessages((prev) => prev.map(m => 
+        m.id === retryMessageId ? { ...m, hasError: false } : m
+      ));
+    } else {
+      // Create user message with the conversation ID (only for new messages)
+      const userMessage: Message = {
+        id: userMessageId,
+        author: 'user',
+        text: trimmedInput,
+        createdAt: new Date().toISOString(),
+        pinned: false,
+        expanded: false,
+        conversationId: conversationId,
+        originalQuestion: trimmedInput
+      };
 
-    // Add user message to chat
-    setMessages((prev) => [...prev, userMessage]);
+      // Add user message to chat
+      setMessages((prev) => [...prev, userMessage]);
+    }
     
-    // Clear input and reset state
-    setInputValue('');
-    setReplyingTo(null);
-    setAttachedFiles([]);
+    // Clear input and reset state (only for new messages)
+    if (!retryMessageId) {
+      setInputValue('');
+      setReplyingTo(null);
+      setAttachedFiles([]);
+    }
+    
     setIsLoading(true);
 
     try {
@@ -199,6 +231,11 @@ const ChatArea: React.FC<Props> = ({ messages, setMessages, onQuoteFromSelection
 
         // Auto-scroll to bottom will be handled by useEffect
       } else {
+        // Mark the user message with error
+        setMessages((prev) => prev.map(m => 
+          m.id === userMessageId ? { ...m, hasError: true } : m
+        ));
+        
         // Handle API error response and show in chat
         const errorMessage: Message = {
           id: `m${Date.now()}_error`,
@@ -213,6 +250,11 @@ const ChatArea: React.FC<Props> = ({ messages, setMessages, onQuoteFromSelection
       }
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'Network error: Unable to connect to the server.';
+      
+      // Mark the user message with error
+      setMessages((prev) => prev.map(m => 
+        m.id === userMessageId ? { ...m, hasError: true } : m
+      ));
       
       // Show error in chat
       const errorMessage: Message = {
@@ -276,6 +318,7 @@ const ChatArea: React.FC<Props> = ({ messages, setMessages, onQuoteFromSelection
             onCopy={copy}
             onReply={reply}
             onShare={share}
+            onRetry={retry}
           />
         ))}
         {isLoading && (
@@ -373,7 +416,7 @@ const ChatArea: React.FC<Props> = ({ messages, setMessages, onQuoteFromSelection
             <button 
               className="send-btn" 
               title={isLoading ? "Sending..." : "Send"}
-              onClick={handleSend}
+              onClick={() => handleSend()}
               disabled={isLoading || !inputValue.trim()}
               onMouseDown={(e) => e.preventDefault()}
             >
